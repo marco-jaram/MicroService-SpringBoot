@@ -35,8 +35,13 @@ private final CompanyRepository companyRepository;
     public Company readByName(String name) {
 
         return this.companyRepository.findByName(name)
-                .orElseThrow(() -> new NoSuchElementException("Company not found"));
+                .orElseThrow(() -> new NoSuchElementException("Company not found/ empresa no encontrada"));
     }
+
+
+
+
+
 
     @Override
     public Company update(Company company, String name) {
