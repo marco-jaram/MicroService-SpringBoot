@@ -8,7 +8,7 @@ spring:
 server:
   servlet:
     context-path: /report-ms
-  port: 0
+  port: 7070
 eureka:
   instance:
     instance-id: "${spring.application.name}:${random.value}"

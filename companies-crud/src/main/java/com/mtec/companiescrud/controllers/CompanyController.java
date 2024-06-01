@@ -33,6 +33,9 @@ public class CompanyController {
     @Observed(name = "company.name")
     @Timed(value = "company.name")
     public ResponseEntity<Company> get(@PathVariable String name) {
+
+
+
         log.info("GET: company {}", name);
         Company company = this.companyService.readByName(name);
         return ResponseEntity.ok(company);

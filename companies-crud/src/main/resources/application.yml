@@ -16,7 +16,7 @@ spring:
 server:
   servlet:
     context-path: /companies-crud
-  port: 0
+  port: 8081
 logging:
   level:
     org:

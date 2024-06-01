@@ -3,10 +3,12 @@ package com.mtec.reportms.service;
 import com.mtec.reportms.helpers.ReportHelper;
 import com.mtec.reportms.models.Company;
 import com.mtec.reportms.models.WebSite;
+import com.mtec.reportms.repository.CompaniesFallbackRepository;
 import com.mtec.reportms.repository.CompaniesRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,13 +22,17 @@ public class ReportServiceImpl implements ReportService {
 
     private final CompaniesRepository companiesRepository;
     private final ReportHelper reportHelper;
-
+    private final CompaniesFallbackRepository companiesFallbackRepository;
+private  final Resilience4JCircuitBreakerFactory circuitBreakerFactory;
 
     @Override
     public String makeReport(String name) {
-        return reportHelper.readTemplate(
-                this.companiesRepository.getByName(name)
-                        .orElseThrow(() -> new RuntimeException("Empresa no encontrada: " + name))
+        var circuitBraker = this.circuitBreakerFactory.create("companies-circuitbreaker");
+        return  circuitBraker.run(
+                () ->this.makeReportMain(name),
+                throwable -> this.makeReportFallback(name, throwable)
+
+
         );
     }
 
@@ -53,4 +59,14 @@ public class ReportServiceImpl implements ReportService {
     public void deleteReport(String name) {
         this.companiesRepository.deleteByName(name);
     }
+
+
+    private String makeReportMain(String name) {
+        return reportHelper.readTemplate(this.companiesRepository.getByName(name).orElseThrow());
+    }
+    private String makeReportFallback(String name, Throwable error) {
+        log.warn(error.getMessage());
+        return reportHelper.readTemplate(this.companiesFallbackRepository.getByName(name));
+    }
+
 }
