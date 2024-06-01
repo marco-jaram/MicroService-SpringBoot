@@ -1,6 +1,6 @@
 # Spring Boot Micro Servicios
 
-Es práctica para desarrollar  mis habilidades en el desarrollo de microservicios utilizando Spring Boot y Spring Cloud. Es parte de un curso [Microservicios con Spring Cloud y Spring Boot 2024](https://www.udemy.com/share/10ajKK3@0rRZYQH13p4KkkFdk0kKEgjnG9CxEBLwFJzOxdYzAT1OMgZ36dY3sdr0IE9XJoT8sQ==/)
+Es una  práctica para desarrollar  mis habilidades en el desarrollo de microservicios utilizando Spring Boot y Spring Cloud. Es parte de un curso [Microservicios con Spring Cloud y Spring Boot 2024](https://www.udemy.com/share/10ajKK3@0rRZYQH13p4KkkFdk0kKEgjnG9CxEBLwFJzOxdYzAT1OMgZ36dY3sdr0IE9XJoT8sQ==/)
 
 ## Descripción
 
